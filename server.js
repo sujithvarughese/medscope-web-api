@@ -12,7 +12,7 @@ import notFound from "./middleware/not-found.js";
 import { authenticateUser, authorizePermissions } from "./middleware/authentication.js";
 import authRouter from './routes/auth-router.js'
 import aiRouter from './routes/ai-router.js'
-import newsRouter from "./routes/news-router";
+import newsRouter from "./routes/news-router.js";
 
 
 const app = express()

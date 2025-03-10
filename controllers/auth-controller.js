@@ -4,6 +4,7 @@ import User from "../models/User.js";
 import { attachCookies, createJWT } from "../utils/index.js";
 
 const register = async (req, res) => {
+	console.log(req.body)
 	// destructure fields from request body
 	const { lastName, firstName, email, password } = req.body;
 
@@ -33,11 +34,18 @@ const register = async (req, res) => {
 	// send response JSON to include user fields
 	res.status(StatusCodes.CREATED).json({
 		message: "user registered",
-		user: userInfo
+		user: {
+			_id: user._id,
+			lastName: user.lastName,
+			firstName: user.firstName,
+			email: user.email,
+			isAdmin: user.isAdmin,
+		}
 	});
 }
 
 const login = async (req, res) => {
+	console.log(req.body)
 	// destructure login obj sent from front end
 	const { email, password } = req.body;
 
@@ -48,7 +56,7 @@ const login = async (req, res) => {
 
 	// check User model in database for entered email
 	// select('+password') needed since password property in User is hidden
-	const user = await User.findOne({ email }).select("+password").populate("favorites");
+	const user = await User.findOne({ email }).select("+password");
 	if (!user) {
 		throw new UnauthenticatedError("Invalid credentials");
 	}
@@ -60,10 +68,8 @@ const login = async (req, res) => {
 		throw new UnauthenticatedError("Invalid credentials");
 	}
 
-	const { _id, isAdmin, firstName, favorites } = user
-
 	// user variable with just the fields we want to send
-	const userInfo = { userID: _id, firstName: firstName, isAdmin: isAdmin };
+	const userInfo = { userID: user._id, isAdmin: user.isAdmin };
 
 	// create jwt with jwt.sign
 	const token = createJWT({ payload: userInfo });
@@ -73,8 +79,13 @@ const login = async (req, res) => {
 
 	res.status(StatusCodes.OK).json({
 		message: "user logged in success",
-		user: userInfo,
-		favorites: favorites
+		user: {
+			_id: user._id,
+			lastName: user.lastName,
+			firstName: user.firstName,
+			email: user.email,
+			isAdmin: user.isAdmin,
+		}
 	});
 }
 

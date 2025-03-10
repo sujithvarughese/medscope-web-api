@@ -1,6 +1,5 @@
 import { OpenAI } from "openai"
 import dotenv from 'dotenv'
-import Workout from '../models/Workout.js'
 dotenv.config()
 const openai = new OpenAI({ apiKey: process.env.OPEN_AI_KEY })
 
