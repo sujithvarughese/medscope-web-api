@@ -13,6 +13,7 @@ import { authenticateUser, authorizePermissions } from "./middleware/authenticat
 import authRouter from './routes/auth-router.js'
 import aiRouter from './routes/ai-router.js'
 import newsRouter from "./routes/news-router.js";
+import researchRouter from "./routes/research-router.js";
 
 
 const app = express()
@@ -42,7 +43,8 @@ app.get("/api/v1", (req, res) => {
 })
 app.use("/api/v1/auth", authRouter);  // login, logout, register
 app.use("/api/v1/news", newsRouter)
-
+app.use("/api/v1/ai", aiRouter)
+app.use("/api/v1/research", researchRouter)
 
 app.use(notFound);
 app.use(errorHandler);

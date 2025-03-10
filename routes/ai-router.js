@@ -1,7 +1,8 @@
 import express from "express";
 const router = express.Router()
-import { fetchCuratedWorkout } from "../controllers/ai-controller.js"
+import {fetchBmiResults, fetchHealthRecommendations, fetchSymptomAssessment} from "../controllers/ai-controller.js"
 
-router.route("/").post(fetchCuratedWorkout)
-
+router.route("/symptoms").post(fetchSymptomAssessment)
+router.route("/assessment").post(fetchHealthRecommendations)
+router.route("/bmi").post(fetchBmiResults)
 export default router
