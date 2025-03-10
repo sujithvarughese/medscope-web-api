@@ -20,7 +20,7 @@ const port = process.env.PORT || 8800
 dotenv.config()
 
 app.use(cors({
-    origin: ["http://localhost:5173", "https://medscope-info.pages.dev", "https://f4bc0363.medscope-info.pages.dev"],
+    origin: ["http://localhost:5173", "https://medscope-info.pages.dev", "https://f4bc0363.medscope-info.pages.dev", "https://12913ea4.medscope-info.pages.dev"],
     credentials: true,
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"]
 }));
