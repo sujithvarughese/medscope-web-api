@@ -21,15 +21,22 @@ const port = process.env.PORT || 8800
 dotenv.config()
 
 app.use(cors({
-    origin: ["http://localhost:5173", "https://medscope.app", "https://medscope.app/#/", "https://www.medscope.app", "https://medscope-info.pages.dev", "https://f4bc0363.medscope-info.pages.dev", "https://12913ea4.medscope-info.pages.dev"],
+    origin: ["http://localhost:5173", "https://medscope.app", "https://medscope.app/#/", "https://www.medscope.app", "https://medscope-info.pages.dev", "https://f4bc0363.medscope-info.pages.dev", "https://12913ea4.medscope-info.pages.dev", "med-scope.netlify.app", "medscope.app"],
     credentials: true,
-    methods: ["GET", "POST", "PATCH", "PUT", "DELETE"]
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
 }));
+app.options("*", cors());
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 app.use(bodyParserErrorHandler());
 app.use(express.json())
 app.use(cookieParser(process.env.JWT_SECRET));
+
+app.use("/api/v1/auth", authRouter);  // login, logout, register
+app.use("/api/v1/news", newsRouter)
+app.use("/api/v1/ai", aiRouter)
+app.use("/api/v1/research", researchRouter)
 
 if (process.env.NODE_ENV !== "production") {
     app.use(morgan("dev"));
@@ -41,10 +48,6 @@ app.get("/", (req, res) => {
 app.get("/api/v1", (req, res) => {
     res.send("API")
 })
-app.use("/api/v1/auth", authRouter);  // login, logout, register
-app.use("/api/v1/news", newsRouter)
-app.use("/api/v1/ai", aiRouter)
-app.use("/api/v1/research", researchRouter)
 
 app.use(notFound);
 app.use(errorHandler);

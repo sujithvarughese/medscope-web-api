@@ -9,7 +9,9 @@ const attachCookies = ({ res, token }) => {
 		expires: new Date(Date.now() + oneDay), // cookie will be expired in 1 day
 		sameSite: "none",  // if server and client on different ports
 		secure: true,  // must be https if in production
-		signed: true
+		signed: true,
+		withCredentials: true,
+		credentials: true
 	})
 }
 

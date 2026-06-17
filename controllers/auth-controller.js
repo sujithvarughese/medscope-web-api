@@ -4,7 +4,6 @@ import User from "../models/User.js";
 import { attachCookies, createJWT } from "../utils/index.js";
 
 const register = async (req, res) => {
-	console.log(req.body)
 	// destructure fields from request body
 	const { lastName, firstName, email, password } = req.body;
 
@@ -30,7 +29,6 @@ const register = async (req, res) => {
 	const token = createJWT({ payload: userInfo });
 	// create cookie in the response, where we attach token
 	attachCookies({ res, token });
-	console.log(token)
 	// send response JSON to include user fields
 	res.status(StatusCodes.CREATED).json({
 		message: "user registered",
@@ -45,7 +43,6 @@ const register = async (req, res) => {
 }
 
 const login = async (req, res) => {
-	console.log(req.body)
 	// destructure login obj sent from front end
 	const { email, password } = req.body;
 
@@ -73,7 +70,6 @@ const login = async (req, res) => {
 
 	// create jwt with jwt.sign
 	const token = createJWT({ payload: userInfo });
-	console.log(token)
 	// create cookie in the response, where we attach token
 	attachCookies({ res, token });
 
